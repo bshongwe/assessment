@@ -1,0 +1,24 @@
+@assessment_HostAddress = http://localhost:5020
+
+### Get object by id (proxies to restful-api.dev)
+GET {{assessment_HostAddress}}/api/objects/7
+Accept: application/json
+
+###
+
+### Create object with name and price
+POST {{assessment_HostAddress}}/api/objects
+Content-Type: application/json
+
+{
+  "name": "Apple MacBook Pro 16",
+  "price": 1849.99
+}
+
+###
+
+### List locally cached objects (EF + LINQ)
+GET {{assessment_HostAddress}}/api/objects
+Accept: application/json
+
+###
