@@ -2,6 +2,34 @@
 
 A lightweight ASP.NET Core Web API that integrates with the public [Restful API](https://api.restful-api.dev/) service. It fetches and creates objects via the external API, then caches them locally in a SQLite database using Entity Framework Core.
 
+A built-in web UI is served at the root URL so you can interact with the API without extra tools.
+
+## Screenshots
+
+### Lookup — fetch an object by ID
+
+![Lookup object by ID](<screenshots/Screenshot 2026-06-12 103545.png>)
+
+Enter an object ID and click **Fetch** to retrieve data from restful-api.dev. The UI shows formatted fields and the raw JSON response.
+
+### Create — post a new object
+
+![Create a new object](<screenshots/Screenshot 2026-06-12 103751.png>)
+
+Submit a **name** and **price** to create an object on the external API. The response is displayed with a success badge.
+
+### Catalog — browse locally cached objects
+
+![Local catalog of cached objects](<screenshots/Screenshot 2026-06-12 103805.png>)
+
+View all objects stored in the local SQLite database. Click **View** on any row to look it up, or **Refresh** to reload the list.
+
+### Development — API and EF Core in action
+
+![Development logs showing HTTP client and EF Core](<screenshots/Screenshot 2026-06-12 103614.png>)
+
+When running under `dotnet run`, the terminal shows HTTP requests to restful-api.dev and EF Core SQL commands as objects are fetched and cached.
+
 ## What it does
 
 This API acts as a thin wrapper around `https://api.restful-api.dev`:
@@ -53,6 +81,7 @@ The project follows a simple separation of concerns:
 
 ```
 assessment/
+├── wwwroot/           # Web UI (HTML, CSS, JS)
 ├── Controllers/       # HTTP endpoints
 ├── Services/          # Business logic and external API client
 ├── Data/              # EF Core DbContext
@@ -100,9 +129,15 @@ dotnet --version
    dotnet run
    ```
 
-   The API listens on **http://localhost:5020** by default (see `Properties/launchSettings.json`).
+   The API listens on **http://localhost:5020** by default (see `Properties/launchSettings.json`). The browser opens automatically to the web UI.
 
-4. **Test an endpoint:**
+4. **Open the web UI** at [http://localhost:5020](http://localhost:5020) (see [Screenshots](#screenshots) above):
+
+   - **Lookup** — fetch an object by ID from restful-api.dev
+   - **Create** — add a new object with name and price
+   - **Catalog** — browse locally cached objects
+
+5. **Test an endpoint** (optional):
 
    ```bash
    curl http://localhost:5020/api/objects/7
@@ -213,7 +248,9 @@ dotnet dev-certs https --trust
 
 ```
 assessment/
+├── screenshots/       # UI and dev screenshots for documentation
 ├── assessment/
+│   ├── wwwroot/       # Web UI (HTML, CSS, JS)
 │   ├── Controllers/
 │   │   └── ObjectsController.cs
 │   ├── Data/
